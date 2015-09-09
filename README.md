@@ -1,1 +1,1 @@
-# mongodb-studies [![Build status](https://ci.appveyor.com/api/projects/status/jqpb86a9p4w3r4j6/branch/master?svg=true)](https://ci.appveyor.com/project/wallymathieu/mongodb-studies/branch/master)
+# mongodb-studies [![Build status](https://ci.appveyor.com/api/projects/status/jqpb86a9p4w3r4j6/branch/master?svg=true)](https://ci.appveyor.com/project/wallymathieu/mongodb-studies/branch/master) [![Build Status](https://travis-ci.org/wallymathieu/mongodb-studies.svg?branch=master)](https://travis-ci.org/wallymathieu/mongodb-studies)

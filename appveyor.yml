@@ -1,8 +1,9 @@
 version: 1.0.{build}
 configuration: Release
+services:
+  - mongodb
 before_build:
   - nuget restore mongodb-studies.sln
-  - choco install mongodb
 build:
   project: mongodb-studies.sln
   verbosity: minimal

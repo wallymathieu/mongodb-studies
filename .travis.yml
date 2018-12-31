@@ -10,3 +10,6 @@ install:
 script: 
   - bundle install 
   - rake test
+branches:
+  only:
+    - master

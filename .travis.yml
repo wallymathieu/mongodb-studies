@@ -1,15 +1,16 @@
 
 language: csharp 
+dotnet: 2.1.401
 services:
   - mongodb
   
 solution: ./mongodb-studies.sln
 install:
-    - nuget restore ./mongodb-studies.sln
+    - dotnet restore ./mongodb-studies.sln
 
 script: 
-  - bundle install 
-  - rake test
+  - dotnet build Tests
+  - dotnet test Tests
 branches:
   only:
     - master

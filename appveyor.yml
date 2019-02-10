@@ -1,9 +1,10 @@
 version: 1.0.{build}
 configuration: Release
+image: Visual Studio 2017
 services:
   - mongodb
 before_build:
-  - nuget restore mongodb-studies.sln
+  - dotnet restore mongodb-studies.sln
 build:
   project: mongodb-studies.sln
   verbosity: minimal
@@ -12,3 +13,6 @@ nuget:
   account_feed: false
   project_feed: false
   disable_publish_on_pr: true
+branches:
+  only:
+    - master

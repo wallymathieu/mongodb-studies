@@ -36,7 +36,7 @@ namespace SomeBasicMongoDbApp.Tests
 		{
 		}
 
-		[TestFixtureSetUp]
+		[OneTimeSetUp]
 		public void TestFixtureSetup()
 		{
 
@@ -63,7 +63,7 @@ namespace SomeBasicMongoDbApp.Tests
 		}
 
 
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public void TestFixtureTearDown()
 		{
 		}

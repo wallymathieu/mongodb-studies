@@ -70,6 +70,9 @@ namespace SomeBasicMongoDbApp.Tests
 		[OneTimeTearDown]
 		public void TestFixtureTearDown()
 		{
+			_engine.DropCollection("customers");
+			_engine.DropCollection("products");
+			_engine.DropCollection("orders");
 		}
 	}
 }

@@ -6,6 +6,8 @@ using System;
 using System.Threading.Tasks;
 using MongoDB.Driver.Linq;
 using System.Linq;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 namespace SomeBasicMongoDbApp.Tests
 {
@@ -39,7 +41,9 @@ namespace SomeBasicMongoDbApp.Tests
 		[OneTimeSetUp]
 		public void TestFixtureSetup()
 		{
-
+			var objectSerializer = new ObjectSerializer(type => ObjectSerializer.DefaultAllowedTypes(type) 
+			                                                    ||( type?.Namespace?.StartsWith("SomeBasicMongoDbApp.Core") ?? false));
+			BsonSerializer.RegisterSerializer(objectSerializer);
 			_engine = new MongoServer(new MongoServerSettings()).GetDatabase("mongodb");
 
 			XmlImport.Parse(XDocument.Load(Path.Combine("TestData", "TestData.xml")), new[] { typeof(Customer), typeof(Order), typeof(Product) },

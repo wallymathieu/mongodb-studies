@@ -14,7 +14,7 @@ namespace SomeBasicMongoDbApp.Tests
 	[TestFixture]
 	public class CustomerDataTests
 	{
-		private MongoDatabase _engine;
+		private IMongoDatabase _engine;
 		[Test]
 		public void CanGetCustomerById()
 		{
@@ -44,22 +44,22 @@ namespace SomeBasicMongoDbApp.Tests
 			var objectSerializer = new ObjectSerializer(type => ObjectSerializer.DefaultAllowedTypes(type) 
 			                                                    ||( type?.Namespace?.StartsWith("SomeBasicMongoDbApp.Core") ?? false));
 			BsonSerializer.RegisterSerializer(objectSerializer);
-			_engine = new MongoServer(new MongoServerSettings()).GetDatabase("mongodb");
+			_engine = new MongoClient(new MongoClientSettings()).GetDatabase("mongodb");
 
 			XmlImport.Parse(XDocument.Load(Path.Combine("TestData", "TestData.xml")), new[] { typeof(Customer), typeof(Order), typeof(Product) },
 							(type, obj) =>
 							{
-								if (obj is Customer)
+								switch (obj)
 								{
-									_engine.GetCollection<Customer>("customers").Insert(obj);
-								}
-								if (obj is Product)
-								{
-									_engine.GetCollection<Product>("products").Insert(obj);
-								}
-								if (obj is Order)
-								{
-									_engine.GetCollection<Product>("orders").Insert(obj);
+									case Customer customer:
+										_engine.GetCollection<Customer>("customers").InsertOne(customer);
+										break;
+									case Product product:
+										_engine.GetCollection<Product>("products").InsertOne(product);
+										break;
+									case Order order:
+										_engine.GetCollection<Order>("orders").InsertOne(order);
+										break;
 								}
 							}, "http://tempuri.org/Database.xsd");
 
@@ -70,6 +70,9 @@ namespace SomeBasicMongoDbApp.Tests
 		[OneTimeTearDown]
 		public void TestFixtureTearDown()
 		{
+			_engine.DropCollection("customers");
+			_engine.DropCollection("products");
+			_engine.DropCollection("orders");
 		}
 	}
 }
